@@ -1,21 +1,40 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import "./Login.css";
 import { CircularProgress } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
-  const email = useRef();
-  const password = useRef();
+  let [ email, setEmail ] = useState("")
+  let [ password, setPassword ] = useState("")
+  const  Navigate=  useNavigate()
+  // const email = useRef();
+  // const password = useRef();
 //   const { user,isFetching, dispatch ,error} = useContext(AuthContext);
 
-//   const handleClick = (e) => {
-//     e.preventDefault();
-//     loginCall(
-//       { email: email.current.value, password: password.current.value },
-//       dispatch
-//     );
+  const handleClick = async (e) => {
+    e.preventDefault();
+    // loginCall(
+    //   { email: email.current.value, password: password.current.value },
+    //   dispatch
+    // );
+    const loginInfo={
+      email : email,
+      password:password,
+  };
+  
+  try {
+    let apires = await axios.post("http://localhost:4000/v1/auth/login",loginInfo)
+    console.log("loginInfo", apires);
+    Navigate("/home")
+  } catch (error) {
+    console.log(error, "hellooo");
+  }
+      
+      
 
-//   };
+  };
 
   return (
     <div className="login">
@@ -25,23 +44,21 @@ export default function Login() {
           <span className="loginDesc">let's connect to success</span>
         </div>
         <div className="loginRight">
-          {/* <form className="loginBox" onSubmit={handleClick}>
-           */}
-                     <form className="loginBox">
+          <form className="loginBox" onSubmit={handleClick}>
             <input
               placeholder="Email"
               type="email"
               required
               className="loginInput"
-              ref={email}
+              onChange={(e)=>{ setEmail(e.target.value) }}
             />
             <input
               placeholder="Password"
               type="password"
               required
-              minLength="6"
+              minLength="4"
               className="loginInput"
-              ref={password}
+              onChange={(e)=>{ setPassword(e.target.value)}}
             />
             <button className="loginButton" type="submit" >
               {/* {isFetching ? (
@@ -53,13 +70,16 @@ export default function Login() {
               Log In
             </button>
             <span className="loginForgot">Forgot Password?</span>
+            <Link to="/">
             <button className="loginRegisterButton">
               {/* {isFetching ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
                 "Create a New Account"
               )} */}
+              Create a New Account
             </button>
+            </Link>
           </form>
         </div>
       </div>

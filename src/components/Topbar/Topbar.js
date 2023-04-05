@@ -1,9 +1,29 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Topbar() {
+    let [ search , setSearch ] = useState("")
+    useEffect(()=>{
+        axios.get(`http://localhost:4000/v1/user/search-user?page=1&limit=200&search=${search}`).then((res)=>{
+        //@pending show user list
+        console.log("search user response" ,  res)
+        }).catch((err)=>{
+            console.log("err", err);
+        })
+    }, [ search ])
 
+
+    // const handleSearch = ()=>{
+    //     axios.get(`http://localhost:4000/v1/user/search-user?page=1&limit=200&search=${search}`).then((res)=>{
+    //     //@pending show user list
+    //     console.log("search user response" ,  res)
+    //     }).catch((err)=>{
+    //         console.log("err", err);
+    //     })
+    // }
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
@@ -17,7 +37,13 @@ export default function Topbar() {
                     <input
                         placeholder="Search for friend, post or video"
                         className="searchInput"
+                        value={search}
+                        onChange={(e)=>{  setSearch(e.target.value) }}
                     />
+                    {/* <div className="topbarIconItem">
+                        <Search onChange={()=>{ handleSearch() }}/>
+                    </div> */}
+                    
                 </div>
             </div>
             <div className="topbarRight">
