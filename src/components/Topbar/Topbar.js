@@ -3,9 +3,10 @@ import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import dropDownProfile from "../dropDownProfile/dropDownProfile";
 export default function Topbar() {
-    let [ search , setSearch ] = useState("")
+    const [ search , setSearch ] = useState("")
+    const [ showProfileDropDown , setShowProfileDropDown ] = useState(false) 
     useEffect(()=>{
         if(search != "")
         {
@@ -55,9 +56,20 @@ export default function Topbar() {
                     <span className="topbarLink">Timeline</span>
                 </div>
                 <div className="topbarIcons">
+                {/* for homepage */}
+                <div className="topbarIconItem">
+                        <HomeOutlined />
+                        {/* <span className="topbarIconBadge">1</span> */}
+                    </div>
+                    {/* for network or follower and following */}
                     <div className="topbarIconItem">
-                        <Person />
-                        <span className="topbarIconBadge">1</span>
+                        <PeopleAltOutlined />
+                        {/* <span className="topbarIconBadge">1</span> */}
+                    </div>
+                    {/* for job */}
+                    <div className="topbarIconItem">
+                        <WorkOutlineOutlined />
+                        <span className="topbarIconBadge">2</span>
                     </div>
                     <div className="topbarIconItem">
                         <Chat />
@@ -67,6 +79,14 @@ export default function Topbar() {
                         <Notifications />
                         <span className="topbarIconBadge">1</span>
                     </div>
+                    {/* my profile dropdonw */}
+                    <div className="topbarIconItem">
+                        <AccountCircleTwoTone />
+                        <span className="topbarIconBadge">2</span>
+                        { showProfileDropDown &&  <DropDownProfile/> }
+                    </div>
+
+                    
                 </div>
             </div>
             
