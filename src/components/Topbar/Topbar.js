@@ -1,9 +1,9 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Search, Person, Chat, Notifications, HomeOutlined, PeopleAltOutlined, WorkOutlineOutlined, AccountCircleTwoTone } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import dropDownProfile from "../dropDownProfile/dropDownProfile";
+// import dropDownProfile from "../dropDownProfile/dropDownProfile";
 export default function Topbar() {
     const [ search , setSearch ] = useState("")
     const [ showProfileDropDown , setShowProfileDropDown ] = useState(false) 
@@ -83,7 +83,7 @@ export default function Topbar() {
                     <div className="topbarIconItem">
                         <AccountCircleTwoTone />
                         <span className="topbarIconBadge">2</span>
-                        { showProfileDropDown &&  <DropDownProfile/> }
+                        {/* { showProfileDropDown &&  <DropDownProfile/> } */}
                     </div>
 
                     
