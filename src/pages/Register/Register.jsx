@@ -11,11 +11,11 @@ export default function Register() {
   // const email = useRef();
   // const password = useRef();
   // const passwordAgain = useRef();
-  const [ name , setName ] = useState("")
-  const [ email , setEmail ] = useState("")
-  const [ userName , setUsername ] = useState("")
-  const [ password , setPassword ] = useState("")
-  const [ passwordAgain , setPasswordAgain ] = useState("")
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [userName, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [passwordAgain, setPasswordAgain] = useState("")
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function Register() {
     }
     else {
       const user = {
-        name : name,
+        name: name,
         username: userName,
         email: email,
         password: password,
@@ -50,11 +50,11 @@ export default function Register() {
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
-            <input placeholder="name" className="loginInput" required value={name} onChange={(e)=>{setName(e.target.value)}}/>
-            <input placeholder="Username" className="loginInput" required value={userName} onChange={(e)=>{setUsername(e.target.value)}}/>
-            <input placeholder="Email" type="email" className="loginInput" required value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
-            <input placeholder="Password" type="password" className="loginInput" required value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
-            <input placeholder="Password Again" type="password" className="loginInput" required value={passwordAgain} onChange={(e)=>{setPassword(e.target.value)}}/>
+            <input placeholder="name" className="loginInput" required value={name} onChange={(e) => { setName(e.target.value) }} />
+            <input placeholder="Username" className="loginInput" required value={userName} onChange={(e) => { setUsername(e.target.value) }} />
+            <input placeholder="Email" type="email" className="loginInput" required value={email} onChange={(e) => { setEmail(e.target.value) }} />
+            <input placeholder="Password" type="password" className="loginInput" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
+            <input placeholder="Password Again" type="password" className="loginInput" required value={passwordAgain} onChange={(e) => { setPassword(e.target.value) }} />
             <button className="loginButton" type="submit">Sign Up</button>
             <Link to="/login">
               <button className="loginRegisterButton">
