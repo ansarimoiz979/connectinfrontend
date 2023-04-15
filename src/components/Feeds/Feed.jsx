@@ -8,31 +8,45 @@ import { AuthContext } from '../../context/AuthContext'
 
 const Feed = ({username}) => {
   const [posts ,setPosts]=useState([]);
-// const {user}=useContext(AuthContext)
-// useEffect(()=>{
+const {user, accessToken}=useContext(AuthContext)
+useEffect(()=>{
 
-//   if(username){
-//     axios.get("http://localhost:8800/api/posts/profile/"+username)
-// .then((res)=>{setPosts(res.data); console.log(res.data,"hello")}).catch((err)=>{
-//   console.log(err)
-// })
-//   }
-// else {   axios.get( "http://localhost:8800/api/posts/timeline/"+user._id)
-// .then((res)=>{setPosts(res.data.sort((p1, p2)=>{
-//   return new Date(p2.createdAt) - new Date (p1.createdAt)
-// })); console.log(res.data,"hello")}).catch((err)=>{
-//   console.log(err)
-// })
+  if(username){
+    axios.get("http://localhost:8800/api/posts/profile/"+username)
+.then((res)=>{setPosts(res.data); console.log(res.data,"hello")}).catch((err)=>{
+  console.log(err)
+})
+  }
+else {
+  
+  
+  
+  console.log("useeffect else to get posts")
+  // http://localhost:4000/v1/posts?page=1&limit=10
+  // axios.get( "http://localhost:8800/api/posts/timeline/"+user._id)
+  // axios.get( "http://localhost:4000/v1/posts?page=1&limit=10")
 
-// }
-// },[username,user._id])
+  
+  axios.get("http://localhost:4000/v1/posts?page=1&limit=10", { headers: {"Authorization" : `Bearer ${accessToken}`} })
+.then((res)=>{
+  console.log("post " , res.data);
+  setPosts(res.data.items.sort((p1, p2)=>{
+  return new Date(p2.createdAt) - new Date (p1.createdAt)
+})); console.log(res.data,"hello")}).catch((err)=>{
+  console.log(err)
+})
+
+}
+},[username,user._id])
 console.log(posts);
   return (
     <div className='feed'>
       <div className="feedWrapper">
-     {/* {username===user.username && <Share/>} */}
+     {/* {username===user.username && <Share/>}
+      */}
+      <Share/>
        {posts.map((p)=>(
-        <Post key={p._id} post=
+        <Post key={p.id} post=
         {p} />
        ))}
       

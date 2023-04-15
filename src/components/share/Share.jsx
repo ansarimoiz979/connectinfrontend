@@ -20,27 +20,18 @@ export default function Share() {
 
 const submitHandler = async (e) => {
   e.preventDefault();
-  const newPost = {
-    userId: user._id,
-    desc: desc.current.value,
-  };
+  var bodyFormData = new FormData();
+  bodyFormData.append('description', desc.current.value);
+  bodyFormData.append('tags', "tags");
+  
   if (file) {
-    const data = new FormData();
-    const fileName = Date.now() + file.name;
-    data.append("name", fileName);
-    data.append("file", file);
-    newPost.img = fileName;
-    console.log(newPost);
-    try {
-      await axios.post("http://localhost:8800/api/upload", data);
-    } catch (err) {
-      console.log(err, "error 1");
-    }
+    bodyFormData.append("file", file);
   }
   try { 
-    await axios.post("http://localhost:8800/api/posts", newPost);
-    
-  Navigate(`/profile/${user.username}`)
+    console.log("bodyfromdata",bodyFormData);
+    await axios.post("http://localhost:4000/v1/posts", bodyFormData);
+    console.log("file uploaded successfully")
+  // Navigate(`/profile/${user.username}`)
 
    
   } catch (err) {
