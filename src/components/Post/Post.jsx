@@ -9,7 +9,7 @@ import { AuthContext } from "../../context/AuthContext"
 
 const Post = ({post}) => {
 
-    const { user:currentUser}= useContext(AuthContext);
+    const { user:currentUser , accessToken}= useContext(AuthContext);
     const [user, setuser]=useState({});
 
     useEffect(()=>{
@@ -20,23 +20,24 @@ const Post = ({post}) => {
         
         },[])
         useEffect(()=>{
-            setliked(post.likes.includes(currentUser._id))
+            // setliked(post.likes.includes(currentUser._id))
         },[currentUser._id,post.likes])
 
     const PF= process.env.REACT_APP_PUBLIC_FOLDER;
 
 //   const kk=  Users.filter((u)=>u.id==post.userId)
 //   console.log(kk,"hello kk data");
-const [like, setlike]=useState(post.likes.length)
+// const [like, setlike]=useState(post.likes.length)
 const [liked, setliked]=useState(false)
 
 
-const handleLike=()=>{
+const handleLike=(postId)=>{
     try {
-        axios.put ("http://localhost:8800/api/posts/"+post._id + "/like", {userId:currentUser._id})
+        console.log("access token" , accessToken);
+        axios.post(`http://localhost:4000/v1/posts/like/${ postId }`, {},{ headers : {"Authorization" : `Bearer ${accessToken}`} }).then(res=>{console.log("res",res.data);}).catch((err)=>{console.log("err",err);})
     } catch (error) {}
-    setlike(liked? like-1:like+1)
-    setliked(!liked)
+    // setlike(liked? like-1:like+1)
+    // setliked(!liked)
 }
     return (
         
@@ -54,16 +55,16 @@ const handleLike=()=>{
                     <MoreVert />
                 </div>
                 <div className="postCenter">
-                    <span className="postText">{post?.desc}</span>
+                    <span className="postText">{post?.description}</span>
                     <img src={PF+post.img} className="postImg" />
 
 
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img src={`${PF}like.png`} onClick={handleLike} className="likeIcon" />
-                        <img src={`${PF}heart.png`}  onClick={handleLike} className="likeIcon" />
-                        <span className="postlikeCounter">{like}  people like it</span>
+                        <img src={`${PF}like.png`} onClick={()=>handleLike(post?.id)} className="likeIcon" />
+                        <img src={`${PF}heart.png`}  onClick={()=>handleLike(post?.id)} className="likeIcon" />
+                        {/* <span className="postlikeCounter">{like}  people like it</span> */}
 
                     </div>
                     <div className="postBottomRight">

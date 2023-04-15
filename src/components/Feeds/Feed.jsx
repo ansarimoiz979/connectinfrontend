@@ -27,7 +27,7 @@ else {
   // axios.get( "http://localhost:4000/v1/posts?page=1&limit=10")
 
   
-  axios.get("http://localhost:4000/v1/posts?page=1&limit=10", { headers: {"Authorization" : `Bearer ${accessToken}`} })
+  axios.get("http://localhost:4000/v1/posts?page=1&limit=10", { headers : {"Authorization" : `Bearer ${accessToken}`} })
 .then((res)=>{
   console.log("post " , res.data);
   setPosts(res.data.items.sort((p1, p2)=>{
