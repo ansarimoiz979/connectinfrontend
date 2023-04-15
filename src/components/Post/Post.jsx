@@ -34,7 +34,7 @@ const [liked, setliked]=useState(false)
 const handleLike=(postId)=>{
     try {
         console.log("access token" , accessToken);
-        axios.post(`http://localhost:4000/v1/posts/like/${ postId }`, {},{ headers : {"Authorization" : `Bearer ${accessToken}`} }).then(res=>{console.log("res",res.data);}).catch((err)=>{console.log("err",err);})
+        axios.post(`http://localhost:4000/v1/posts/like/${ postId }`, {},{ headers : {"Authorization" : `Bearer ${accessToken}`} }).then(res=>{console.log("res",res.data);setliked(!liked)}).catch((err)=>{console.log("err",err);})
     } catch (error) {}
     // setlike(liked? like-1:like+1)
     // setliked(!liked)
@@ -62,8 +62,8 @@ const handleLike=(postId)=>{
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img src={`${PF}like.png`} onClick={()=>handleLike(post?.id)} className="likeIcon" />
-                        <img src={`${PF}heart.png`}  onClick={()=>handleLike(post?.id)} className="likeIcon" />
+                        <img src={(liked) ? `${PF}like.png` : ""} onClick={()=>handleLike(post?.id)} className="likeIcon" />
+                        <img src={(liked) ? `${PF}heart.png` : ""} onClick={()=>handleLike(post?.id)} className="likeIcon" />
                         {/* <span className="postlikeCounter">{like}  people like it</span> */}
 
                     </div>
